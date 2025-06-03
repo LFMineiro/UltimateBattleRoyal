@@ -45,7 +45,7 @@ class Hero : public Person {
     public:
         Hero(string n): Person(n) {}
         int getTotalPower() override{
-            return Person::getTotalPower() * 1.1;
+            return static_cast<int>(Person::getTotalPower() * 1.1);
             // Heroes have 10% more power because they stand for good
         }
 
@@ -57,7 +57,7 @@ class Villain : public Person {
     public:
         Villain(string n): Person(n) {}
 
-        int getTotalPower(){
+        int getTotalPower() override {
             return (Person::getTotalPower() * (1 + (0.04 * jailTime)));
             // Villains have 4% more power for each year in jail
         }
@@ -100,21 +100,65 @@ class Confrontation {
 };
 
 int main() {
-    SuperPower flight("Flight", 100);
-    SuperPower strength("Super Strength", 150);
-    SuperPower invisibility("Invisibility", 80);
 
-    Hero hero("Superman");
-    hero.addPower(flight);
-    hero.addPower(strength);
+    Confrontation confrontation;
 
-    Villain villain("Lex Luthor");
-    villain.addPower(invisibility);
-    villain.setJailTime(2);
+    Hero homemAranha("Homem-Aranha");
+    homemAranha.addPower(SuperPower("Soltar teia", 2));
+    homemAranha.addPower(SuperPower("Sentido apurado", 2));
 
-    Confrontation confrotation;
-    confrotation.fight(hero, villain);
-    cout << "Lex Luthor has " << villain.getJailTime() << " years in Jail" << endl;
+    Hero superHomem("Super-Homem");
+    superHomem.addPower(SuperPower("Voar", 2));
+    superHomem.addPower(SuperPower("Forca", 4));
+    superHomem.addPower(SuperPower("Sopro Congelante", 3));
+
+    Hero mulherMaravilha("Mulher Maravilha");
+    mulherMaravilha.addPower(SuperPower("Voar", 2));
+    mulherMaravilha.addPower(SuperPower("Forca", 4));
+    mulherMaravilha.addPower(SuperPower("Laco", 2));
+
+    Hero hulk("Hulk");
+    hulk.addPower(SuperPower("Forca", 4));
+    hulk.addPower(SuperPower("Regeneracao", 3));
+    hulk.addPower(SuperPower("Artilheiro do Galo", 1));
+
+    Hero tempestade("Tempestade");
+    tempestade.addPower(SuperPower("Controlar o clima", 5));
+
+    Hero wolverine("Wolverine");
+    wolverine.addPower(SuperPower("Regeneracao", 3));
+    wolverine.addPower(SuperPower("Sentido apurado", 2));
+    wolverine.addPower(SuperPower("Adamantium", 2));
+
+    Villain duende("Duende Verde");
+    duende.addPower(SuperPower("Tecnologia", 3));
+    duende.addPower(SuperPower("Durabilidade", 1));
+
+    Villain cheetah("Cheetah");
+    cheetah.addPower(SuperPower("Sentido apurado", 2));
+    cheetah.addPower(SuperPower("Durabilidade", 1));
+    cheetah.addPower(SuperPower("Velocidade", 3));
+
+    Villain magneto("Magneto");
+    magneto.addPower(SuperPower("Magnetismo", 5));
+
+    Villain bizarro("Bizarro");
+    bizarro.addPower(SuperPower("Voar", 2));
+    bizarro.addPower(SuperPower("Forca", 4));
+    bizarro.addPower(SuperPower("Sopro Congelante", 3));
+
+    confrontation.fight(duende, homemAranha);
+    confrontation.fight(cheetah, wolverine);
+    confrontation.fight(wolverine, duende);
+    confrontation.fight(cheetah, hulk);
+    confrontation.fight(cheetah, superHomem);
+    confrontation.fight(cheetah, mulherMaravilha);
+    confrontation.fight(magneto, mulherMaravilha);
+    confrontation.fight(magneto, hulk);
+    confrontation.fight(magneto, superHomem);
+    confrontation.fight(tempestade, magneto);
+    confrontation.fight(bizarro, hulk);
+    confrontation.fight(homemAranha, duende);
 
     return 0;
 }
