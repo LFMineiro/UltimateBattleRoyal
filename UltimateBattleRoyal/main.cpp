@@ -28,6 +28,9 @@ class Person {
         string getName() {
             return name;
         }
+        vector<SuperPower> getPowers() {
+            return powers;
+        }
         virtual int getTotalPower() {
             if(powers.empty()) {
                 return 0;
@@ -37,16 +40,27 @@ class Person {
                     total += power.getPower();
                 }
                 return total;
-            }
+            }            
         }
+ 
+            friend class Hero;
+            friend class Villain;
 };
 
 class Hero : public Person {
     public:
         Hero(string n): Person(n) {}
         int getTotalPower() override{
-            return static_cast<int>(Person::getTotalPower() * 1.1);
+            return (Person::getTotalPower() * 1.1);
             // Heroes have 10% more power because they stand for good
+        }
+
+        Hero operator+(Hero &h) {
+            Hero newHero(name + " e " + h.name);
+            for (auto& power : h.powers) {
+                newHero.addPower(power);
+            }
+            return newHero;
         }
 
 };
@@ -67,6 +81,14 @@ class Villain : public Person {
         void setJailTime(int time) {
             jailTime = time;
         }
+        
+        Villain operator+(Villain &v) {
+            Villain newVillain(name + " e " + v.name);
+            for (auto& power : v.powers) {
+                newVillain.addPower(power);
+            }
+            return newVillain;
+    }
 };
 
 class Confrontation {
@@ -159,6 +181,21 @@ int main() {
     confrontation.fight(tempestade, magneto);
     confrontation.fight(bizarro, hulk);
     confrontation.fight(homemAranha, duende);
+
+// Faça a dupla Duende Verde e Cheetah
+// Faça a dupla Magneto e Bizarro
+// Faça a dupla Super-Homem e Hulk
+
+    Villain chettaVerde = duende + cheetah;
+    Villain magnetoBizarro = magneto + bizarro;
+    Hero superHulk = superHomem + hulk;
+
+    confrontation.fight(chettaVerde, mulherMaravilha);
+    confrontation.fight(magnetoBizarro, wolverine);
+    confrontation.fight(magnetoBizarro, wolverine);
+
+    
+    
 
     return 0;
 }
