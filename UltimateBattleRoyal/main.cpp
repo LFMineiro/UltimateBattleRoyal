@@ -124,25 +124,27 @@ class Confrontation {
             Villain* v1 = dynamic_cast<Villain*>(&p1);
             Villain* v2 = dynamic_cast<Villain*>(&p2);
 
-            if(p1Power > p2Power) {
-                if(v2) {
-                    cout << p1.getName() << " wins against " << p2.getName() << endl;
-                    v2->setJailTime(v2->getJailTime()  + 2);
-                }
-                else {
-                    cout << p1.getName() << " wins against " << p2.getName() << endl;
-                }
-            }
-            else if(p1Power < p2Power) {
-                if(v1) {
-                    cout << p2.getName() << " wins against " << p1.getName() << endl;
-                    v1->setJailTime(v1->getJailTime() + 2);
-                }
-                else {
-                    cout << p2.getName() << " wins against " << p1.getName() << endl;
-                }
-            }
-        }         
+    cout << "Battle: " << p1.getName() << " (" << p1Power << ") vs "
+              << p2.getName() << " (" << p2Power << ")\n";
+
+    if (p1Power > p2Power) {
+        cout << "Winner: " << p1.getName() << "!\n";
+        if (v2) {
+            v2->setJailTime(v2->getJailTime() + 2);
+            
+        }
+    } else if (p1Power < p2Power) {
+        cout << "Winner: " << p2.getName() << "!\n";
+        if (v1) {
+            v1->setJailTime(v1->getJailTime() + 2);
+            
+        }
+    } else {
+        cout << "It's a tie! \n";
+    }
+
+    cout << "-----------------------------------------\n";      
+        } 
 };
 
 int main() {
