@@ -1,6 +1,9 @@
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <string>
+#include <algorithm>
+
 
 using namespace std;
 
@@ -11,7 +14,7 @@ class SuperPower {
 
     public:
         SuperPower(string n, int p): name(n), power(p) {}
-        int getPower() {
+        float getPower() {
             return power;
         }
 };
@@ -31,7 +34,7 @@ class Person {
         vector<SuperPower> getPowers() {
             return powers;
         }
-        virtual int getTotalPower() {
+        virtual float getTotalPower() {
             if(powers.empty()) {
                 return 0;
             } else {
@@ -42,6 +45,7 @@ class Person {
                 return total;
             }            
         }
+
  
             friend class Hero;
             friend class Villain;
@@ -50,7 +54,7 @@ class Person {
 class Hero : public Person {
     public:
         Hero(string n): Person(n) {}
-        int getTotalPower() override{
+        float getTotalPower() override{
             return (Person::getTotalPower() * 1.1);
             // Heroes have 10% more power because they stand for good
         }
@@ -60,7 +64,17 @@ class Hero : public Person {
             for (auto& power : h.powers) {
                 newHero.addPower(power);
             }
+            for(auto &power : powers) {
+                newHero.addPower(power);
+            }
             return newHero;
+        }
+        bool operator<(Hero &h1) {
+            return getTotalPower() < h1.getTotalPower();
+        }
+        friend ostream& operator<<(ostream& os, Hero &h ) {
+            os << h.getName() << " - " << h.getTotalPower();
+            return os;
         }
 
 };
@@ -71,7 +85,7 @@ class Villain : public Person {
     public:
         Villain(string n): Person(n) {}
 
-        int getTotalPower() override {
+        float getTotalPower() override {
             return (Person::getTotalPower() * (1 + (0.04 * jailTime)));
             // Villains have 4% more power for each year in jail
         }
@@ -87,8 +101,18 @@ class Villain : public Person {
             for (auto& power : v.powers) {
                 newVillain.addPower(power);
             }
+            for (auto& power : powers) {
+                newVillain.addPower(power);
+            }
             return newVillain;
     }
+        bool operator<(Villain &v1) {
+            return getTotalPower() < v1.getTotalPower();
+        }
+        friend ostream& operator<<(ostream& os, Villain &v ) {
+            os << v.getName() << " - " << v.getTotalPower();
+            return os;
+        }
 };
 
 class Confrontation {
@@ -194,8 +218,46 @@ int main() {
     confrontation.fight(magnetoBizarro, wolverine);
     confrontation.fight(magnetoBizarro, wolverine);
 
+    // Começar o ranking
     
+    // A ideia aqui para os rankings separados vai ser fazer um vector com todos herois e outros com todos vilões, e com a sobrecarga do operador <, ordenadar por ordem de poder
+
+    vector<Hero> heroes;
+        heroes.emplace_back(homemAranha);
+        heroes.emplace_back(superHomem);
+        heroes.emplace_back(mulherMaravilha);
+        heroes.emplace_back(hulk);
+        heroes.emplace_back(tempestade);
+        heroes.emplace_back(wolverine);
+        heroes.emplace_back(superHulk);
+        sort(heroes.begin(), heroes.end());
+        reverse(heroes.begin(), heroes.end());
     
+    vector<Villain> villains;
+        villains.emplace_back(duende);
+        villains.emplace_back(cheetah);
+        villains.emplace_back(magneto);
+        villains.emplace_back(bizarro);
+        villains.emplace_back(chettaVerde);
+        villains.emplace_back(magnetoBizarro);
+        sort(villains.begin(), villains.end());
+        reverse(villains.begin(), villains.end());
+
+        int h = 1;
+        int v = 1;
+
+        ofstream HeroFile("Ranking Herois.txt");
+    
+        HeroFile << " ====== Ranking dos Herois ====== " << endl;
+        for(auto& hero : heroes) {
+            HeroFile << "[" << h++ << "]) " << hero << endl ; 
+    }
+    ofstream VillainFile("Ranking Viloes.txt");
+    
+    VillainFile << " ====== Ranking dos Viloes ====== " << endl;
+    for(auto& villain : villains) {
+        VillainFile << "[" << v++ << "]) " << villain << endl ; 
+}
 
     return 0;
 }
