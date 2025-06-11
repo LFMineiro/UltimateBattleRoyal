@@ -210,13 +210,13 @@ int main() {
 // Faça a dupla Magneto e Bizarro
 // Faça a dupla Super-Homem e Hulk
 
-    Villain chettaVerde = duende + cheetah;
+    Villain cheetahVerde = duende + cheetah;
     Villain magnetoBizarro = magneto + bizarro;
     Hero superHulk = superHomem + hulk;
 
-    confrontation.fight(chettaVerde, mulherMaravilha);
+    confrontation.fight(cheetahVerde, mulherMaravilha);
     confrontation.fight(magnetoBizarro, wolverine);
-    confrontation.fight(magnetoBizarro, wolverine);
+    confrontation.fight(superHulk, magnetoBizarro);
 
     // Começar o ranking
     
@@ -238,7 +238,7 @@ int main() {
         villains.emplace_back(cheetah);
         villains.emplace_back(magneto);
         villains.emplace_back(bizarro);
-        villains.emplace_back(chettaVerde);
+        villains.emplace_back(cheetahVerde);
         villains.emplace_back(magnetoBizarro);
         sort(villains.begin(), villains.end());
         reverse(villains.begin(), villains.end());
