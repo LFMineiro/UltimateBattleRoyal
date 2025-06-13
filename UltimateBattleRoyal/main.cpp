@@ -245,21 +245,22 @@ int main() {
         sort(villains.begin(), villains.end());
         reverse(villains.begin(), villains.end());
 
-        int h = 1;
-        int v = 1;
+    int h = 1;
+    int v = 1;
 
-        ofstream HeroFile("Ranking Herois.txt");
-    
-        HeroFile << " ====== Ranking dos Herois ====== " << endl;
+    ofstream HeroFile("Ranking Herois.txt");
+
+    HeroFile << " ====== Ranking dos Herois ====== " << endl;
         for(auto& hero : heroes) {
             HeroFile << "[" << h++ << "]) " << hero << endl ; 
     }
+    
     ofstream VillainFile("Ranking Viloes.txt");
     
     VillainFile << " ====== Ranking dos Viloes ====== " << endl;
-    for(auto& villain : villains) {
-        VillainFile << "[" << v++ << "]) " << villain << endl ; 
-}
+        for(auto& villain : villains) {
+            VillainFile << "[" << v++ << "]) " << villain << endl ; 
+    }
 
     return 0;
 }
