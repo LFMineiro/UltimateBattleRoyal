@@ -45,6 +45,13 @@ class Person {
                 return total;
             }            
         }
+        bool operator<(Person* a) {
+            return getTotalPower() < a->getTotalPower();
+        }
+        friend ostream& operator<<(ostream& os, Person* p ) {
+            os << p->getName() << " - " << p->getTotalPower();
+            return os;
+        }
 
  
             friend class Hero;
@@ -208,9 +215,9 @@ int main() {
     confrontation.fight(bizarro, hulk);
     confrontation.fight(homemAranha, duende);
 
-// Faça a dupla Duende Verde e Cheetah
-// Faça a dupla Magneto e Bizarro
-// Faça a dupla Super-Homem e Hulk
+//  Duende Verde e Cheetah
+//  Magneto e Bizarro
+//  Super-Homem e Hulk
 
     Villain cheetahVerde = duende + cheetah;
     Villain magnetoBizarro = magneto + bizarro;
@@ -261,6 +268,38 @@ int main() {
         for(auto& villain : villains) {
             VillainFile << "[" << v++ << "]) " << villain << endl ; 
     }
+
+    // Para resolver o desafio dos ranking geralvamos criar um vector de vetores que apontam para Personagens
+    
+    vector<Person *> ranking;
+        ranking.emplace_back(&homemAranha);
+        ranking.emplace_back(&superHomem);
+        ranking.emplace_back(&mulherMaravilha);
+        ranking.emplace_back(&hulk);
+        ranking.emplace_back(&tempestade);
+        ranking.emplace_back(&wolverine);
+        ranking.emplace_back(&superHulk);
+        ranking.emplace_back(&duende);
+        ranking.emplace_back(&cheetah);
+        ranking.emplace_back(&magneto);
+        ranking.emplace_back(&bizarro);
+        ranking.emplace_back(&cheetahVerde);
+        ranking.emplace_back(&magnetoBizarro);    
+    
+    // Pra isso dar certo preciso sobrecarregar o operador < na classe Personagem.
+
+        sort(ranking.begin(), ranking.end());
+        int p = 1;
+
+        ofstream Ranking("Ranking.txt");
+        
+        for(auto& person : ranking) {
+            Ranking << "[" << p++ << "]) " << person << endl ; 
+        }
+
+        // Aparentemente missão cumprida!
+
+
 
     return 0;
 }
