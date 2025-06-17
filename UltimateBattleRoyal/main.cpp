@@ -48,15 +48,16 @@ class Person {
         bool operator<(Person* a) {
             return getTotalPower() < a->getTotalPower();
         }
-        friend ostream& operator<<(ostream& os, Person* p ) {
-            os << p->getName() << " - " << p->getTotalPower();
-            return os;
-        }
+        friend ostream& operator<<(ostream& os, Person* p );
 
  
             friend class Hero;
             friend class Villain;
 };
+        ostream& operator<<(ostream& os, Person* p ) {
+            os << p->getName() << " - " << p->getTotalPower();
+            return os;
+        }
 
 class Hero : public Person {
     public:
@@ -79,12 +80,13 @@ class Hero : public Person {
         bool operator<(Hero &h1) {
             return getTotalPower() < h1.getTotalPower();
         }
-        friend ostream& operator<<(ostream& os, Hero &h ) {
+        friend ostream& operator<<(ostream& os, Hero &h );
+
+};
+        ostream& operator<<(ostream& os, Hero &h ) {
             os << h.getName() << " - " << h.getTotalPower();
             return os;
         }
-
-};
 
 class Villain : public Person {
     private:
@@ -116,17 +118,19 @@ class Villain : public Person {
         bool operator<(Villain &v1) {
             return getTotalPower() < v1.getTotalPower();
         }
-        friend ostream& operator<<(ostream& os, Villain &v ) {
+        friend ostream& operator<<(ostream& os, Villain &v);
+};
+        ostream& operator<<(ostream& os, Villain &v ) {
             os << v.getName() << " - " << v.getTotalPower();
             return os;
         }
-};
+
 
 class Confrontation {
     public:
         void fight(Person& p1, Person& p2) {
-            int p1Power = p1.getTotalPower();
-            int p2Power = p2.getTotalPower();
+            float p1Power = p1.getTotalPower();
+            float p2Power = p2.getTotalPower();
 
             Villain* v1 = dynamic_cast<Villain*>(&p1);
             Villain* v2 = dynamic_cast<Villain*>(&p2);
@@ -293,6 +297,7 @@ int main() {
 
         ofstream Ranking("Ranking.txt");
         
+        Ranking << " ====== Ranking Geral ====== " << endl;
         for(auto& person : ranking) {
             Ranking << "[" << p++ << "]) " << person << endl ; 
         }
